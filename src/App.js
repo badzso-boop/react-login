@@ -1,34 +1,23 @@
-import {useRef} from 'react';
+import SignUp from './components/signUp';
+import Login from './components/login';
 
 function App() {
-  const nevRef= useRef();
-  const emailRef= useRef();
-  const passwordRef= useRef();
 
-  function httpPostHandler(event) {
-    event.preventDefault();
-
-    const enteredNev = nevRef.current.value;
-    const enteredEmail = emailRef.current.value;
-    const enteredPassword = passwordRef.current.value;
-
-    const data = {
-      nev: enteredNev,
-      email: enteredEmail,
-      password: enteredPassword
-    };
-
-    fetch('/teszt', {method: 'POST', body: JSON.stringify(data), headers: {'Content-type':'application/json'}}).then(console.log('sikerült'));
+  function SignUpPostHandler(signupData) {
+    
+   fetch('http://localhost:9000/testAPI', {method: 'POST', body: JSON.stringify(signupData, null, 2), headers: {'Content-type':'application/json'}}).then(res => console.log(res));
   }
+
+  function LoginPostHandler(loginData) {
+    
+    fetch('http://localhost:9000/testAPI', {method: 'POST', body: JSON.stringify(loginData, null, 2), headers: {'Content-type':'application/json'}}).then(res => console.log(res));
+   }
 
   return (
     <div>
-      <form onSubmit={httpPostHandler}>
-        <input type = "text" name = "nev" placeholder = "nev" ref={nevRef}/>
-        <input type = "text" name = "email" placeholder = "email" ref={emailRef}/>
-        <input type = "text" name = "password" placeholder = "password" ref={passwordRef}/>
-        <button type = "submit">Regisztrálj!</button>
-      </form>
+      <h1>Üdvözöllek az oldalon!</h1>
+      <Login OnLogin={LoginPostHandler}/>
+      <SignUp OnSignUp={SignUpPostHandler}/>
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import 'bootstrap/dist/css/bootstrap.css'
+
 import SignUp from './components/signUp';
 import Login from './components/login';
 

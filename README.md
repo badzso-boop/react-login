@@ -1,3 +1,15 @@
+# Krózsernek leírás
+
+Na figyu úgy van hogy elméletben importáltam a bootstrapet viszont nem próbáltam ki hogy működik-e?
+Először is szedd le a [www.github.com](www.github.com)-ról majd a mappában nyomj egy "npm install"-t
+Utána hogy elkezdd a szervert ugyan abban a mappában nyomj egy "npm start"-t várj egy kicsit és elindul a szeró.
+[http://localhost:3000](http://localhost:3000)-on
+
+### `fájlok`
+
+Az src mappában vannak a fájlok. Az App.js-ben van megimportálva a login illetve a signup a return függvényben. A 'className="classnév"'-ben tudod megadni a classokat. De ezt egy div-ként kezeld. Aztán van az src/components mappa ahol van a 'login.js' (értelemszerűen a login form) és a 'signUp.js' (a signup form).
+Itt ugyan úgy a return fügvényben van a html és a 'className="classnév"'-el tudsz classokat adni.
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

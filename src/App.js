@@ -6,14 +6,20 @@ import Login from './components/login';
 function App() {
 
   function SignUpPostHandler(signupData) {
-    
-   fetch('http://localhost:9000/testAPI', {method: 'POST', body: JSON.stringify(signupData, null, 2), headers: {'Content-type':'application/json'}}).then(res => console.log(res));
+    fetch('http://localhost:3030/signup', {method: 'POST', body: JSON.stringify(signupData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
+      return res.json();
+    }).then(data => {
+        console.log(data);
+    });
   }
 
   function LoginPostHandler(loginData) {
-    
-    fetch('http://localhost:9000/testAPI', {method: 'POST', body: JSON.stringify(loginData, null, 2), headers: {'Content-type':'application/json'}}).then(res => console.log(res));
-   }
+    fetch('http://localhost:3030/login', {method: 'POST', body: JSON.stringify(loginData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
+      return res.json();
+    }).then(data => {
+      console.log(data);
+    });
+  }
 
   return (
     <div>

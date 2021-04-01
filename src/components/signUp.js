@@ -30,9 +30,9 @@ function SignUp(props) {
             <h1>Regisztráció</h1>
             <form onSubmit={signupHandler}>
                 <input type = "text" name = "nev" placeholder = "Név" ref={nevRef}/>
-                <input type = "text" name = "email" placeholder = "Email" ref={emailRef}/>
-                <input type = "text" name = "password" placeholder = "Jelszó" ref={passwordRef}/>
-                <input type = "text" name = "password2" placeholder = "Jelszó újra" ref={passwordRef2}/>
+                <input type = "email" name = "email" placeholder = "Email" ref={emailRef}/>
+                <input type = "password" name = "password" placeholder = "Jelszó" ref={passwordRef}/>
+                <input type = "password" name = "password2" placeholder = "Jelszó újra" ref={passwordRef2}/>
                 <button type = "submit" className="btn btn-warning">Regisztrálj!</button>
             </form>
         </div>

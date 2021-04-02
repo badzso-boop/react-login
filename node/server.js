@@ -1,73 +1,74 @@
 const express = require('express');
 const session = require('express-session');
+const crypto = require('crypto');
 const cors = require('cors');
 
 const app = express();
 
 const db = require('./database');
 
-//db.query('SELECT * from teszt').then(result => {console.log(result)}).catch(err => {console.log(err)});
-
 app.use(cors());
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
+app.use(express.static(__dirname + '/public'));
 app.use(session({
   secret: 'nagy a kugim xD',
   resave: false,
   saveUninitialized: false,
   name: 'korona',
-}));
-
-/*app.use(function (req, res, next) {
-  if (!req.session.user_id) {
-    req.session.user_id = 1;
+  cookie: {
+    expires: new Date(Date.now() + (2 * 12 * 30 * 86400 * 1000))
   }
-
-  next()
-});*/
+}));
 
 app.get('/set', (req, res) => {
   req.session.user_id = 2;
   return res.send('<h1>Lead id elmentve!</h1>');
 });
 
+app.get('/dest', (req, res) => {
+  req.session.destroy();
+  return res.send('<h1>Session törölve</h1>');
+});
+
 app.get('/zigi', (req, res, next) => {
   return res.send(''+req.session.user_id);
 });
 
-app.get('/kugi', (req, res, next) => {
-  res.send('<form action="/product" method="POST"><input type="text" name="title"><button type="submit">Add Product</button></form>');
-  console.log(res);
-});
-
 app.get('/login', (req, res) => {
-  return res.redirect('http://localhost:3000/login');
+  return res.sendFile(__dirname + '/public/login.html');
 });
 
 app.post('/login', (req, res) => {
   let login = req.body;
-  if(login.email == undefined || login.email === "" ||
-     login.password == undefined || login.password === "") {
+
+  if(login.email === undefined || login.email === "" ||
+     login.password === undefined || login.password === "") {
     res.status(400);
     return res.json({"Hiba":"Hiányoznak az adatok"});
   }
-  
-  db.query('SELECT password FROM teszt WHERE email = ?', [login.email]).then(resp => {
+
+  db.query('SELECT password, id FROM teszt WHERE email = ?', login.email).then(resp => {
     if(resp[0] === undefined) {
       return res.json({"Hiba":"Hibás email cím vagy jelszó"});
     }
-    let pass = resp[0].password;
-    db.query('SELECT SHA2(?,384) AS pass', login.password).then(resp => {
-      let pass2 = resp[0].pass;
-      if(pass === pass2) {
-        return res.json({"Siker":"Sikeres bejelentkezés"});
-      }
-      return res.json({"Hiba":"Hibás email cím vagy jelszó"});
-    }).catch(err => {
-      console.log('A jelszótitkosításkor: ' + err);
-    });
+    
+    const pass = resp[0].password;
+    const id = resp[0].id;
+
+    let hash = crypto.createHash('sha384');    
+    let data = hash.update(login.password, 'utf-8');
+    let pass2 = data.digest('hex');
+    
+    if(pass === pass2) {
+      req.session.user_id = id;
+      return res.redirect(307, '/');
+    }
+
+    return res.json({"Hiba":"Hibás email cím vagy jelszó"});
   }).catch(err => {
-    console.log(err)
+    console.log(err);
+    return res.json({"Hiba":"A bejelentkezés sikertelen"});
   });
 });
 
@@ -94,8 +95,9 @@ app.post('/signup', (req, res) => {
   ];
 
   console.log(login);
-  db.query('INSERT INTO teszt(nev, email, password) values (?,?,SHA2(?,384))', p).then(result => {
-    return res.json({"Siker":"Sikeres regisztráció"});
+  db.query('INSERT INTO teszt(nev, email, password) values (?,?,SHA2(?,384)) RETURNING id', p).then(result => {
+    req.session.user_id = result[0].id;
+    return res.redirect('/');
   }).catch(err => {
     console.log(err);
     return res.json({"Hiba":"A regisztráció sikertelen"});
@@ -119,6 +121,10 @@ app.post('/product', (req, res) => {
 });
 
 app.get('/', (req, res, next) => {
+  if(req.session.user_id === undefined) {
+    return res.redirect('/login');
+  }
+    
   res.send('<h1>Hello from Express</h1>');
 });
 

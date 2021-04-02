@@ -49,7 +49,6 @@ function App() {
 
   return (
     <div className="container-fluid row p-1 m-0">
-      <h1 className="text-center col-lg-12 text-white mb-5">Üdvözöllek az oldalon!</h1>
       <Navbar />
       <Switch>
           <Route path='/' exact={true}>

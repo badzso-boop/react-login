@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <script>
+    function sendLead() {
+      const lead = {
+        nev: document.getElementById('nev').value,
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+      };
+      console.log(lead);
+      fetch('/login-post', {method: 'POST', body: JSON.stringify(lead), headers: {'Content-type':'application/json'}}).then(console.log('Lead sent!'));
+    }
+  </script>
+</head>
+<body>
+  <h1>Login</h1>
+  <input type="text" placeholder="Név" id="nev">
+  <input type="text" placeholder="Email" id="email">
+  <input type="text" placeholder="Jelszó" id="password">
+  <button onclick="sendLead()">Send</button>
+</body>
+</html>

@@ -22,11 +22,13 @@ function LoginForm(props) {
         props.OnLogin(loginData);
     }
 
+    /*
     function kitoltes() {
         const nev = "Ujj Norbert";
         const email = "norbert.ujj@gmail.com";
         const jelszo = "s3cret";
     }
+    */
 
     //itt van a html része 'className="classnév"'-ként tudod definiálni az osztályokat
     return (
@@ -38,7 +40,6 @@ function LoginForm(props) {
                 <input className="list-group-item hater border-light border-top-0 text-dark" type = "password" name = "password" placeholder = "Jelszó" required ref={passwordRef}/>
                 <button className="list-group-item w-100 btn btn-info text-dark my-3 hater border border-dark" type = "submit">Belépés</button>
             </form>
-            <button onClick={kitoltes}>Kitoltes  Elkuldes</button>
         </div>
     );
 }

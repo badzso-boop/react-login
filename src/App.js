@@ -7,7 +7,7 @@ import SignUp from './components/signUp';
 import Login from './components/login';
 import AddTodo from './components/addtodo';
 import ListTodo from './components/listTodo';
-import Navbar from './components/navbar';
+
 
 const DUMMY_DATA = [];
 
@@ -49,7 +49,6 @@ function App() {
 
   return (
     <div className="container-fluid row p-1 m-0">
-      <Navbar />
       <Switch>
           <Route path='/' exact={true}>
             <Login className="col-lg-6"  OnLogin={LoginPostHandler}/>

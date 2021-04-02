@@ -1,27 +1,66 @@
 <!DOCTYPE html>
 <html lang="hu">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <script>
-    function sendLead() {
-      const lead = {
-        nev: document.getElementById('nev').value,
-        email: document.getElementById('email').value,
-        password: document.getElementById('password').value,
-      };
-      console.log(lead);
-      fetch('/login-post', {method: 'POST', body: JSON.stringify(lead), headers: {'Content-type':'application/json'}}).then(console.log('Lead sent!'));
-    }
-  </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Belépés</title>
 </head>
 <body>
-  <h1>Login</h1>
-  <input type="text" placeholder="Név" id="nev">
-  <input type="text" placeholder="Email" id="email">
-  <input type="text" placeholder="Jelszó" id="password">
-  <button onclick="sendLead()">Send</button>
+    <div class="col-lg-6">
+        <h1 class="text-center py-3 text-info ">Belépés</h1>
+        <form class="list-group w-75 mx-auto" id="list">
+            <input class="list-group-item hater border-light border-bottom-0 border-top-0 text-dark" type = "email" id = "logemail" placeholder = "Email" required>
+            <input class="list-group-item hater border-light border-top-0 text-dark" type = "password" id = "logpassword" placeholder = "Jelszó" required>
+            <button class="list-group-item w-100 btn btn-info text-dark my-3 hater border border-dark" type = "submit" onclick="login()">Belépés</button>
+        </form>
+    </div>
+    <div class="col-lg-6">
+        <h1 class="text-center py-3 text-info">Regisztráció</h1>
+        <div class="list-group w-75 mx-auto" id="list">
+            <input class="list-group-item hater border-light border-bottom-0 text-dark" type = "name" id = "signev" placeholder = "Név" required>
+            <input class="list-group-item hater border-light border-bottom-0 border-top-0 text-dark" type = "email" id = "sigemail" placeholder = "Email" required>
+            <input class="list-group-item hater border-light border-bottom-0 border-top-0 text-dark" type = "password" id = "sigpassword" placeholder = "Jelszó" required>
+            <input class="list-group-item hater border-light border-top-0 text-dark" type = "password" id = "sigpassword2" placeholder = "Jelszó újra" required>
+            <button class="list-group-item w-100 btn btn-info text-dark my-3 hater border border-dark" type = "submit" onclick="signup()">Regisztrálj!</button>
+        </div>
+    </div>
 </body>
+<script>
+    function login() {
+        const email = document.getElementById('logemail').value;
+        const password = document.getElementById('logpassword').value;
+        const loginData = {
+            email: email,
+            password: password
+        }
+
+        fetch('http://localhost:3030/login', {method: 'POST', body: JSON.stringify(loginData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
+      return res.json();
+    }).then(data => {
+      console.log(data);
+    });
+    }
+
+    function signup() {
+        const nev = document.getElementById('signev').value;
+        const email = document.getElementById('sigemail').value;
+        const password = document.getElementById('sigpassword').value;
+        const sigpassword2 = document.getElementById('sigpassword2').value;
+
+        const signupData = {
+            nev: nev,
+            email: email,
+            password: password,
+            password2: password2
+        }
+        
+        fetch('http://localhost:3030/signup', {method: 'POST', body: JSON.stringify(signupData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
+      return res.json();
+    }).then(data => {
+        console.log(data);
+    });
+    }
+</script>
 </html>

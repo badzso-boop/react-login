@@ -1,4 +1,5 @@
 const express = require('express');
+const MariaDBStore = require('express-session-mariadb-store');
 const session = require('express-session');
 const crypto = require('crypto');
 const cors = require('cors');
@@ -12,6 +13,12 @@ app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 app.use(express.static(__dirname + '/public'));
 app.use(session({
+  store: new MariaDBStore({
+    host: 'localhost',
+    user: 'kodolj',
+    password: 'kodolj2021',
+    database: 'kodolj'
+  }),
   secret: 'nagy a kugim xD',
   resave: false,
   saveUninitialized: false,

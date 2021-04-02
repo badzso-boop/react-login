@@ -17,11 +17,20 @@ function ListTodo(props) {
     }
 
     function todosDeleteHandler(props) {
-        console.log(props);
-        //data.splice(props,1);
-        setReRender(true);
-        
-        let id = setInterval(function() {setReRenderFalse(); clearInterval(id)}, 100);
+        for(let j = 0; j < data.length; j++)
+        {
+            if(data[j].id === props.id)
+            {
+                console.log("ezaz")
+                data.splice(j,1);
+
+                setReRender(true);
+
+                let id = setInterval(function() {setReRenderFalse(); clearInterval(id)}, 100);
+
+                break;
+            }
+        }
     }
 
     return (

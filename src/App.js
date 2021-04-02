@@ -40,6 +40,8 @@ function App() {
     //fetch('http://localhost:9000/testAPI', {method: 'GET', body: JSON.stringify(teendoData, null, 2), headers: {'Content-type':'application/json'}}).then(res => console.log(res));
   }
 
+	//Szia Lajos
+
   return (
     <div>
       <Switch>

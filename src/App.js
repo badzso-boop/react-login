@@ -1,5 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.css'
-
 import SignUp from './components/signUp';
 import Login from './components/login';
 
@@ -16,10 +14,10 @@ function App() {
    }
 
   return (
-    <div>
-      <h1>Üdvözöllek az oldalon!</h1>
-      <Login OnLogin={LoginPostHandler}/>
-      <SignUp OnSignUp={SignUpPostHandler}/>
+    <div className="container-fluid row p-1 m-0">
+      <h1 className="text-center col-lg-12 text-white mb-5">Üdvözöllek az oldalon!</h1>
+      <Login className="col-lg-6" OnLogin={LoginPostHandler}/>
+      <SignUp className="col-lg-6" OnSignUp={SignUpPostHandler}/>
     </div>
   );
 }

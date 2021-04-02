@@ -37,7 +37,6 @@ function App() {
   function TodoPostHandler(teendoData) {
     //fetch('http://localhost:9000/testAPI', {method: 'POST', body: JSON.stringify(teendoData, null, 2), headers: {'Content-type':'application/json'}}).then(res => console.log(res));
     DUMMY_DATA.push(teendoData);
-    console.log(DUMMY_DATA);
     setReRender(true);
         
     let id = setInterval(function() {setReRenderFalse(); clearInterval(id)}, 100);

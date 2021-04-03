@@ -1,0 +1,22 @@
+{
+  "name": "expresses_proba",
+  "version": "1.0.0",
+  "description": "Expresses próba",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "Programozo Palantak",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "express-session-mariadb-store": "^0.1.1",
+    "mariadb": "^2.5.3",
+    "nodemon": "^2.0.7"
+  }
+}

@@ -5,11 +5,10 @@ import Card from './card';
 import ListTodoItemEdit from './lisTodoItemEdit';
 
 let edit = false;
+let editId = -1;
 
 function ListTodo(props) {
     const [ReRender, setReRender] = useState(false);
-
-    console.log(edit)
 
     const data = props.todos;
     
@@ -34,15 +33,13 @@ function ListTodo(props) {
     }
 
     function todosEditHandler(props) {
-        console.log('for-elott')
         for(let j = 0; j < data.length; j++)
         {
-            console.log('if-elott')
             if(data[j].id === props.id)
             {
-                console.log('if-ben')
                 edit = true;
-                console.log(edit)
+                editId = data[j].id;
+                console.log(editId)
 
                 setReRender(true);
 
@@ -55,7 +52,8 @@ function ListTodo(props) {
 
     function todosSaveHandler(props) {
         edit = false;
-        console.log(props)
+
+        console.log(props);
 
         setReRender(true);
 
@@ -65,6 +63,11 @@ function ListTodo(props) {
     return (
         <div>
             <h1>Teendők</h1>
+            {edit && <ListTodoItemEdit
+                        id = {data[editId].id} 
+                        teendo={data[editId].teendo}
+                        onSave = {todosSaveHandler} 
+                        onDelete={todosDeleteHandler}/>}
             <ul>
                 <Card>
                     {data.map(todo => <ListTodoItem 
@@ -75,12 +78,6 @@ function ListTodo(props) {
                                             date = {todo.date} 
                                             onDelete={todosDeleteHandler}
                                             onEdit ={todosEditHandler}/>)}
-                    {edit && data.map(todo => <ListTodoItemEdit 
-                                            key={todo.id} 
-                                            id = {todo.id} 
-                                            teendo={todo.teendo}
-                                            onSave = {todosSaveHandler} 
-                                            onDelete={todosDeleteHandler}/>)}
                 </Card>
             </ul>
         </div>

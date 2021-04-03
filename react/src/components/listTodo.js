@@ -39,7 +39,6 @@ function ListTodo(props) {
             {
                 edit = true;
                 editId = data[j].id;
-                console.log(editId)
 
                 setReRender(true);
 
@@ -53,7 +52,11 @@ function ListTodo(props) {
     function todosSaveHandler(props) {
         edit = false;
 
-        console.log(props);
+        console.log(props)
+
+        data[editId] = {id: editId, teendo: props, author: data[editId].author, date: data[editId].date}
+
+        console.log(data[editId]);
 
         setReRender(true);
 

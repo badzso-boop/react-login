@@ -1,0 +1,44 @@
+.list-group-item, .btn
+{
+    outline: none !important;
+    transition: 0.3s ease-in-out !important;
+}
+.btn:hover
+{
+    color: white !important;
+    font-weight: bold;
+}
+.hater
+{
+    /*background-color: rgba(219, 0, 88, .07)*/
+    background-color: #f7e4e4;
+}
+
+#torik
+{
+    word-break: break-all;
+}
+.navbar-brand
+{
+    font-size: 1.5rem;
+}
+
+@media (max-width: 992px) {
+    #list
+    {
+        width: 100% !important;
+        margin: 0px !important;
+    }
+    body
+    {
+        padding: 0px !important;
+    }
+
+}
+
+@media (min-width: 992px) {
+    #todoBtn
+    {
+        width: 25%;
+    }
+}

@@ -21,7 +21,6 @@ class ListTodoItem extends React.Component{
 
     handleChange(event) {
         this.setState({szoveg: event.target.value});
-        this.setState({date: event.target.value});
         this.forceUpdate();
     }
     
@@ -39,6 +38,8 @@ class ListTodoItem extends React.Component{
         szerk = false;
         let d = new Date();
         const date_tmp = d.getFullYear() + "." + d.getMonth() + "." + d.getDate() + " - " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+
+        this.setState({date: date_tmp})
 
         const saveData = {
             szoveg: this.state.szoveg,

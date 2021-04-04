@@ -36,7 +36,7 @@ function ListTodo(props) {
     return (
         <div className="col-xl-12">
                 <h1 className="text-center py-3 text-info">Teendők</h1>
-                <ul className="m-0 p-0">
+                <ul className="m-0 p-0 ">
                     <Card>
                         {data.map(todo => <ListTodoItem key={todo.id} id = {todo.id} teendo={todo.teendo} author = {todo.author} date = {todo.date} onDelete={todosDeleteHandler}/>)}
                     </Card>

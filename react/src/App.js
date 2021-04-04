@@ -8,7 +8,7 @@ import Login from './components/login';
 import AddTodo from './components/addtodo';
 import ListTodo from './components/listTodo';
 
-var asd = [];
+var NAGY_CSUNYA_ADAT = [];
 
 class App extends React.Component {
   constructor(props){
@@ -31,7 +31,7 @@ class App extends React.Component {
       var result = Array.from(data);
       for(let i = 0; i < result.length; i++)
       {
-        asd.push(result[i])
+        NAGY_CSUNYA_ADAT.push(result[i])
       }
       this.setState({DUMMY_DATA: result});
     }).catch(err => {
@@ -68,7 +68,7 @@ class App extends React.Component {
       }
     });
 
-    this.state.DUMMY_DATA.push(teendoData);
+    NAGY_CSUNYA_ADAT.push(teendoData);
     
     this.forceUpdate();
   }
@@ -87,7 +87,7 @@ class App extends React.Component {
             </Route>
             <Route path='/todo'>
               <AddTodo onAddTeendo={this.TodoPostHandler}/>
-              <ListTodo todos={asd} onSavePush={this.TodoPostHandler}/>
+              <ListTodo todos={NAGY_CSUNYA_ADAT} onSavePush={this.TodoPostHandler}/>
             </Route>
         </Switch>
       </div>

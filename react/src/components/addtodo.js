@@ -14,8 +14,39 @@ function AddTodo(props) {
         const enteredAuthor = authorRef.current.value;
 
         let d = new Date();
+        let year =d.getFullYear();
+        let month = d.getMonth();
+        let day = d.getDate();
+        let hour = d.getHours();
+        let minute = d.getMinutes();
+        let second = d.getSeconds();
+        
+        if(month < 10)
+        {
+            month = '0'+(month+1);
+        }
 
-        const currentDate = d.getFullYear() + "." + d.getMonth() + "." + d.getDate() + " - " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
+        if(day < 10)
+        {
+            day = '0'+day;
+        }
+
+        if(hour < 10)
+        {
+            hour = '0'+hour;
+        }
+        
+        if(minute < 10)
+        {
+            minute = '0'+minute;
+        }
+        
+        if(second < 10)
+        {
+            second = '0'+second;
+        }
+
+        const currentDate = d.getFullYear() + "." + month + "." + day + " - " + hour + ":" + minute + ":" + second;
 
         const teendoData = {
             id: i,

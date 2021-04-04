@@ -42,7 +42,8 @@ class ListTodo extends React.Component {
     }
 
     todosDeleteHandler(props) {        
-        for(let j = 0; j < this.data.length; j++)
+        let j;
+        for(j = 0; j < this.data.length; j++)
         {
             if(this.data[j].id === props.id)
             {
@@ -53,6 +54,21 @@ class ListTodo extends React.Component {
                 break;
             }
         }
+
+        const kuldData = {
+            id: props.id
+        };
+        console.log(kuldData.id);
+        fetch('http://localhost:3030/deletepost', {method: 'POST', body: JSON.stringify(kuldData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
+            return res.json();
+        }).then(data => {
+            if(data.success == 0)
+            {
+                console.log('nem sikerult a mentes');
+            } else {
+                console.log('sikerult a mentes');
+            }
+        });
     }
 
     todosSaveHandler(props) {

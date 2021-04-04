@@ -9,10 +9,27 @@ import AddTodo from './components/addtodo';
 import ListTodo from './components/listTodo';
 
 
-const DUMMY_DATA = [];
+let DUMMY_DATA = [];
+
+let rendereljedKocsog = 1;
 
 function App() {
   const [ReRender, setReRender] = useState(false);
+
+  // Stupid megoldás de maradhat :>
+  if(rendereljedKocsog) {
+    fetch('http://localhost:3030/getTodo', {method: 'GET', headers: {'Content-type':'application/json'}}).then(res => {
+      return res.json();
+    }).then(data => {
+      DUMMY_DATA = data;
+      setReRender(true);
+      let id = setInterval(function() {setReRenderFalse(); clearInterval(id)}, 100);
+    }).catch(err => {
+      console.log('Hibaa bazdmeg: ' + err);
+    });
+    rendereljedKocsog = 0;
+  }
+  
 
   function setReRenderFalse() {
     setReRender(false);

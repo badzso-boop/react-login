@@ -127,6 +127,25 @@ app.post('/product', (req, res) => {
   res.redirect('/');
 });
 
+
+app.get('/getTodo', (req, res) => {
+  const oda = [
+    {
+      id: 0,
+      teendo: 'Vidd le a szemetet',
+      author: 'Krózser',
+      date: '2021.04.04'
+    },
+    {
+      id: 1,
+      teendo: 'Programozzad le a backendet!',
+      author: 'Ádó',
+      date: '2021.04.04'
+    }
+  ];
+  return res.send(oda);
+});
+
 app.get('/', (req, res, next) => {
   if(req.session.user_id === undefined) {
     return res.redirect('/login');

@@ -3,6 +3,12 @@ input, button, textarea
     outline: none !important;
     transition: 0.3s ease-in-out !important;
 }
+
+input:active, input:focus, input:hover, input
+{
+    background-color: #f7e4e4 !important;
+}
+
 .btn:hover
 {
     color: white !important;

@@ -20,7 +20,7 @@
             <button class="list-group-item w-100 btn btn-info text-dark my-3 hater border border-dark" type = "submit" onclick="login();">Belépés</button>
         </div>
     </div>
-    <div class="col-lg-6" id = "reg">
+    <div class="col-lg-6">
         <h1 class="text-center py-3 text-info">Regisztráció</h1>
         <div class="list-group w-75 mx-auto" id="list">
             <input class="list-group-item hater border-light border-bottom-0 text-dark" type = "name" id = "signev" placeholder = "Név" required>
@@ -51,6 +51,7 @@
             return res.json();
         }).then(data => {
             console.log(data);
+
             if(data.siker === 0)
             {
                 span.innerText = "Sikertelen belépés!";
@@ -81,6 +82,7 @@
             return res.json();
         }).then(data => {
             console.log(data);
+
             if(data.siker === 0)
             {
                 span.innerText = "Sikertelen regisztráció!";

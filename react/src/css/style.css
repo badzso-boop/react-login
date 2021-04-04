@@ -1,11 +1,25 @@
 .list-group-item, .btn
 {
     outline: none !important;
+    transition: 0.3s ease-in-out !important;
+}
+.btn:hover
+{
+    color: white !important;
+    font-weight: bold;
 }
 .hater
 {
     /*background-color: rgba(219, 0, 88, .07)*/
     background-color: #f7e4e4;
+}
+#torik
+{
+    word-break: break-all;
+}
+.navbar-brand
+{
+    font-size: 1.5rem;
 }
 
 @media (max-width: 992px) {
@@ -18,4 +32,21 @@
     {
         padding: 0px !important;
     }
+<<<<<<< HEAD
+<<<<<<< HEAD:react/src/css/style.css
 }
+=======
+=======
+>>>>>>> css
+}
+@media (min-width: 992px) {
+    #todoBtn
+    {
+        width: 25%;
+    }
+}
+
+<<<<<<< HEAD
+>>>>>>> css:node/public/css/style.css
+=======
+>>>>>>> css

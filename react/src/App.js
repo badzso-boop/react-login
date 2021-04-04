@@ -37,16 +37,24 @@ function App() {
   function TodoPostHandler(teendoData) {
     //fetch('http://localhost:9000/testAPI', {method: 'POST', body: JSON.stringify(teendoData, null, 2), headers: {'Content-type':'application/json'}}).then(res => console.log(res));
     DUMMY_DATA.push(teendoData);
+<<<<<<< HEAD
+=======
+    console.log(DUMMY_DATA);
+>>>>>>> css
     setReRender(true);
         
     let id = setInterval(function() {setReRenderFalse(); clearInterval(id)}, 100);
   }
 
+<<<<<<< HEAD
   function TodoPostEditHandler() {
     
   }
 
   function ListTodoGetHandler() {
+=======
+  function ListTodoGetHangler() {
+>>>>>>> css
     //fetch('http://localhost:9000/testAPI', {method: 'GET', body: JSON.stringify(teendoData, null, 2), headers: {'Content-type':'application/json'}}).then(res => console.log(res));
   }
 
@@ -59,7 +67,11 @@ function App() {
           </Route>
           <Route path='/todo'>
             <AddTodo onAddTeendo={TodoPostHandler}/>
+<<<<<<< HEAD
             <ListTodo todos={DUMMY_DATA} onSavePush={TodoPostEditHandler}/>
+=======
+            <ListTodo todos={DUMMY_DATA}/>
+>>>>>>> css
           </Route>
       </Switch>
     </div>

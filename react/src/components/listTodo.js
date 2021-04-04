@@ -1,10 +1,6 @@
 import React, {Fragment, useState} from 'react';
 
 import ListTodoItem from './listTodoItem';
-import Card from './card';
-import ListTodoItemEdit from './lisTodoItemEdit';
-import { render } from 'react-dom';
-import DatePicker from 'react-date-picker';
 
 let edit = false;
 let editId = -1;
@@ -12,38 +8,14 @@ let editId = -1;
 class ListTodo extends React.Component {
     constructor(props){
         super(props);
-
-        //const [ReRender, setReRender] = useState(false);
-
-        
         this.data = props.todos;
 
         this.todosDeleteHandler = this.todosDeleteHandler.bind(this);
-        this.todosEditHandler = this.todosEditHandler.bind(this);
         this.todosSaveHandler = this.todosSaveHandler.bind(this);
     };
 
-    todosEditHandler(props) {
-        console.log('nyugi muxik')
+    todosDeleteHandler(props) {
         for(let j = 0; j < this.data.length; j++)
-        {
-            if(this.data[j].id === props.id)
-            {
-                edit = true;
-                editId = this.data[j].id;
-
-                
-
-                this.forceUpdate();
-
-                break;
-            }
-        }
-    }
-
-    todosDeleteHandler(props) {        
-        let j;
-        for(j = 0; j < this.data.length; j++)
         {
             if(this.data[j].id === props.id)
             {
@@ -54,7 +26,7 @@ class ListTodo extends React.Component {
                 break;
             }
         }
-
+        
         const kuldData = {
             id: props.id
         };

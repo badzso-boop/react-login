@@ -1,41 +1,45 @@
 import 'bootstrap/dist/css/bootstrap.css'
 
 import { Route, Switch } from 'react-router-dom';
-import {useState} from 'react';
+import React, {useState} from 'react';
 
 import SignUp from './components/signUp';
 import Login from './components/login';
 import AddTodo from './components/addtodo';
 import ListTodo from './components/listTodo';
 
+var asd = [];
 
-let DUMMY_DATA = [];
+class App extends React.Component {
+  constructor(props){
+    super(props);
 
-let rendereljedKocsog = 1;
+    this.state = {
+      DUMMY_DATA: [],
+    }
 
-function App() {
-  const [ReRender, setReRender] = useState(false);
+    this.SignUpPostHandler = this.SignUpPostHandler.bind(this);
+    this.LoginPostHandler = this.LoginPostHandler.bind(this);
+    this.TodoPostHandler = this.TodoPostHandler.bind(this);
+    this.ListTodoGetHandler = this.ListTodoGetHandler.bind(this);
+  }
 
-  // Stupid megoldás de maradhat :>
-  if(rendereljedKocsog) {
+  componentDidMount() {
     fetch('http://localhost:3030/getTodo', {method: 'GET', headers: {'Content-type':'application/json'}}).then(res => {
       return res.json();
     }).then(data => {
-      DUMMY_DATA = data;
-      setReRender(true);
-      let id = setInterval(function() {setReRenderFalse(); clearInterval(id)}, 100);
+      var result = Array.from(data);
+      for(let i = 0; i < result.length; i++)
+      {
+        asd.push(result[i])
+      }
+      this.setState({DUMMY_DATA: result});
     }).catch(err => {
       console.log('Hibaa bazdmeg: ' + err);
-    });
-    rendereljedKocsog = 0;
-  }
-  
-
-  function setReRenderFalse() {
-    setReRender(false);
+    });   
   }
 
-  function SignUpPostHandler(signupData) {
+  SignUpPostHandler(signupData) {
     fetch('http://localhost:3030/signup', {method: 'POST', body: JSON.stringify(signupData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
       return res.json();
     }).then(data => {
@@ -43,7 +47,7 @@ function App() {
     });
   }
 
-  function LoginPostHandler(loginData) {
+  LoginPostHandler(loginData) {
     fetch('http://localhost:3030/login', {method: 'POST', body: JSON.stringify(loginData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
       return res.json();
     }).then(data => {
@@ -51,7 +55,7 @@ function App() {
     });
   }
 
-  function TodoPostHandler(teendoData) {
+  TodoPostHandler(teendoData) {
     console.log(teendoData);
     fetch('http://localhost:3030/teendovalt', {method: 'POST', body: JSON.stringify(teendoData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
       return res.json();
@@ -64,30 +68,31 @@ function App() {
       }
     });
 
-    DUMMY_DATA.push(teendoData);
-    setReRender(true);
-        
-    let id = setInterval(function() {setReRenderFalse(); clearInterval(id)}, 100);
+    this.state.DUMMY_DATA.push(teendoData);
+    
+    this.forceUpdate();
   }
 
-  function ListTodoGetHandler() {
+  ListTodoGetHandler() {
     //fetch('http://localhost:9000/testAPI', {method: 'GET', body: JSON.stringify(teendoData, null, 2), headers: {'Content-type':'application/json'}}).then(res => console.log(res));
   }
-
-  return (
-    <div className="container-fluid row p-1 m-0">
-      <Switch>
-          <Route path='/' exact={true}>
-            <Login className="col-lg-6"  OnLogin={LoginPostHandler}/>
-            <SignUp className="col-lg-6"  OnSignUp={SignUpPostHandler}/>
-          </Route>
-          <Route path='/todo'>
-            <AddTodo onAddTeendo={TodoPostHandler}/>
-            <ListTodo todos={DUMMY_DATA} onSavePush={TodoPostHandler}/>
-          </Route>
-      </Switch>
-    </div>
-  );
+  render() {
+    //console.log(this.state.DUMMY_DATA);
+    return (
+      <div className="container-fluid row p-1 m-0">
+        <Switch>
+            <Route path='/' exact={true}>
+              <Login className="col-lg-6"  OnLogin={this.LoginPostHandler}/>
+              <SignUp className="col-lg-6"  OnSignUp={this.SignUpPostHandler}/>
+            </Route>
+            <Route path='/todo'>
+              <AddTodo onAddTeendo={this.TodoPostHandler}/>
+              <ListTodo todos={asd} onSavePush={this.TodoPostHandler}/>
+            </Route>
+        </Switch>
+      </div>
+    );
+  }
 }
 
 export default App;

@@ -32,10 +32,14 @@ function AddTodo(props) {
         <div className="col-xl-12">
                 <h1 className="text-center py-3 text-info">Teendő Hozzáadása</h1>
                 <form className="list-group w-75 mx-auto" id="list" onSubmit={addTodoHandler}>
-                    <label className="w-0 h-0 m-0 p-0" htmlFor="teendo"></label>
-                    <input className="list-group-item hater text-dark rounded-top" type = "text" name = "teendo" id = "teendo" placeholder="teendo" ref = {teendoRef}/>
-                    <label className="w-0 h-0 m-0 p-0"htmlFor="author"></label>
-                    <input className="list-group-item hater text-dark" type = "text" name = "author" id = "author" placeholder="személy" ref = {authorRef}/>
+                    <div className="form-floating">
+                        <input className="list-group-item form-control hater text-dark rounded-top" type = "text" name = "teendo" id = "teendo" placeholder="teendo" ref = {teendoRef}/>
+                        <label className="w-25" htmlFor="teendo">Teendő</label>
+                    </div>
+                    <div className="form-floating">
+                        <input className="list-group-item form-control hater text-dark rounded-top" type = "text" name = "author" id = "author" placeholder="személy" ref = {authorRef}/>
+                        <label className="w-25"htmlFor="author">Személy</label>
+                    </div>
                     <button className="list-group-item w-100 btn btn-info text-dark my-3 hater" type = "submit">Mentés/Hozzáadás</button>
                 </form>
         </div>

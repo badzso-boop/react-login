@@ -55,13 +55,16 @@ class ListTodoItem extends React.Component{
 
     render() {
         return (
-            <div className="col-xl-12" id="torik">
-                <h4 className="font-weight-bold text-light">{this.props.author}</h4>
-                {szerk ? <div><input value={this.state.szoveg} onChange = {this.handleChange} type = "text"/><button onClick={this.todoSaveHandler}>Mentés</button></div> : <h3 className="text-light ml-3">{this.state.szoveg}</h3>}
-                <p className="font-italic text-light">{this.state.date}</p>
-                <button className="list-group-item btn btn-block btn-info text-dark my-3 hater" id="todoBtn" onClick={this.todoEditHandler}>Szerkesztés</button>
-                <button className="list-group-item btn btn-block btn-info text-dark my-3 hater" id="todoBtn" onClick={this.todoDeleteHandler}>Törlés</button>
-                
+            <div className="col-xl-12 mb-3" id="torik">
+                <div className="card feher p-2">
+                    <h3 className="text-light font-weight-bold">{this.props.author}</h3>
+                    {szerk ? <div><textarea value={this.state.szoveg} className="rounded-lg hater" onChange = {this.handleChange} type = "text"/><button className="d-inline btn btn-squared-default btn-info text-dark mx-1 mt-2" id="saveBtn" onClick={this.todoSaveHandler}><i class="fa fa-floppy-o" aria-hidden="true"></i></button></div> : <h4 className=" text-light ml-3">{this.state.szoveg}</h4>}
+                    <div className="">
+                        <p className="d-inline font-italic text-light mr-4">{this.state.date}</p>
+                        <button className="d-inline btn btn-squared-default btn-info text-dark mx-1 mt-2" onClick={this.todoEditHandler}><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                        <button className="d-inline btn btn-squared-default btn-info text-dark mx-1 mt-2" onClick={this.todoDeleteHandler}><i class="fa fa-trash" aria-hidden="true"></i></button>
+                    </div>
+                </div>
             </div>
         );
     }

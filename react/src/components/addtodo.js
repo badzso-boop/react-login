@@ -1,7 +1,10 @@
 import {useRef} from 'react';
+import DatePicker from 'react-date-picker';
+
 let i = 0;
 
 function AddTodo(props) {
+   // const [value, onChange] = useState(new Date());
     
     const teendoRef = useRef();
     const authorRef = useRef();
@@ -12,10 +15,13 @@ function AddTodo(props) {
         const enteredTeendo = teendoRef.current.value;
         const enteredAuthor = authorRef.current.value;
 
+        //const currentDate = 
+
         const teendoData = {
             id: i,
             teendo: enteredTeendo,
-            author: enteredAuthor
+            author: enteredAuthor,
+            //date: currentDate
         };
         i++;
 

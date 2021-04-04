@@ -3,9 +3,7 @@ import DatePicker from 'react-date-picker';
 
 let i = 0;
 
-function AddTodo(props) {
-   // const [value, onChange] = useState(new Date());
-    
+function AddTodo(props) {    
     const teendoRef = useRef();
     const authorRef = useRef();
 
@@ -15,13 +13,15 @@ function AddTodo(props) {
         const enteredTeendo = teendoRef.current.value;
         const enteredAuthor = authorRef.current.value;
 
-        //const currentDate = 
+        let d = new Date();
+
+        const currentDate = d.getFullYear() + "." + d.getMonth() + "." + d.getDate() + " - " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 
         const teendoData = {
             id: i,
             teendo: enteredTeendo,
             author: enteredAuthor,
-            //date: currentDate
+            date: currentDate,
         };
         i++;
 
@@ -33,9 +33,9 @@ function AddTodo(props) {
                 <h1 className="text-center py-3 text-info">Teendő Hozzáadása</h1>
                 <form className="list-group w-75 mx-auto" id="list" onSubmit={addTodoHandler}>
                     <label className="w-0 h-0 m-0 p-0" htmlFor="teendo"></label>
-                    <input className="list-group-item hater text-dark rounded-top" type = "text" name = "teendo" id = "teendo" placeholder="személy" ref = {teendoRef}/>
+                    <input className="list-group-item hater text-dark rounded-top" type = "text" name = "teendo" id = "teendo" placeholder="teendo" ref = {teendoRef}/>
                     <label className="w-0 h-0 m-0 p-0"htmlFor="author"></label>
-                    <input className="list-group-item hater text-dark" type = "text" name = "author" id = "author" placeholder="teendő" ref = {authorRef}/>
+                    <input className="list-group-item hater text-dark" type = "text" name = "author" id = "author" placeholder="személy" ref = {authorRef}/>
                     <button className="list-group-item w-100 btn btn-info text-dark my-3 hater" type = "submit">Mentés/Hozzáadás</button>
                 </form>
         </div>

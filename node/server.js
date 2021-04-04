@@ -52,12 +52,12 @@ app.post('/login', (req, res) => {
   if(login.email === undefined || login.email === "" ||
      login.password === undefined || login.password === "") {
     res.status(400);
-    return res.json({"Hiba":"Hiányoznak az adatok"});
+    return res.json({"siker":0});
   }
 
   db.query('SELECT password, id FROM teszt WHERE email = ?', login.email).then(resp => {
     if(resp[0] === undefined) {
-      return res.json({"Hiba":"Hibás email cím vagy jelszó"});
+      return res.json({"siker":1});
     }
     
     const pass = resp[0].password;
@@ -69,13 +69,13 @@ app.post('/login', (req, res) => {
     
     if(pass === pass2) {
       req.session.user_id = id;
-      return res.redirect(307, '/');
+      return res.redirect(302, '/');
     }
 
-    return res.json({"Hiba":"Hibás email cím vagy jelszó"});
+    return res.json({"siker":1});
   }).catch(err => {
     console.log(err);
-    return res.json({"Hiba":"A bejelentkezés sikertelen"});
+    return res.json({"siker":1});
   });
 });
 
@@ -86,14 +86,14 @@ app.post('/signup', (req, res) => {
      login.password == undefined || login.password === "" ||
      login.password2 == undefined || login.password2 === "") {
     res.status(400);
-    return res.json({"Hiba":"Hiányoznak az adatok"});
+    return res.json({"siker":0});
   }
   console.log(login.password);
   console.log(login.password2);
 
   if(login.password !== login.password2) {
     res.status(400);
-    return res.json({"Hiba":"A két jelszó nem egyezik meg!"});
+    return res.json({"siker":2});
   }
   let p = [
     login.nev,
@@ -107,7 +107,7 @@ app.post('/signup', (req, res) => {
     return res.redirect('/');
   }).catch(err => {
     console.log(err);
-    return res.json({"Hiba":"A regisztráció sikertelen"});
+    return res.json({"siker":1});
   });
 });
 

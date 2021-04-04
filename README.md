@@ -10,6 +10,15 @@ Utána hogy elkezdd a szervert ugyan abban a mappában nyomj egy "npm start"-t v
 Az src mappában vannak a fájlok. Az App.js-ben van megimportálva a login illetve a signup a return függvényben. A 'className="classnév"'-ben tudod megadni a classokat. De ezt egy div-ként kezeld. Aztán van az src/components mappa ahol van a 'login.js' (értelemszerűen a login form) és a 'signUp.js' (a signup form).
 Itt ugyan úgy a return fügvényben van a html és a 'className="classnév"'-el tudsz classokat adni.
 
+# JSON API kódok
+### Login
+0 - "Kérem töltse ki a üres mezőket"
+1 - "Hibás email cím vagy jelszó"
+### Signin
+0 - "Kérem töltse ki a üres mezőket"
+1 - "Ezzel az email címmel már regiszráltak fiókot"
+2 - "A két jelszó nem egyezik"
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

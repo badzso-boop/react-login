@@ -42,3 +42,15 @@
         width: 25%;
     }
 }
+
+#log-div, #sig-div {
+    animation-name: megjelenit;
+    animation-duration: 0.35s;
+}
+  
+@keyframes megjelenit {
+    0%   {opacity: 0; display: none;}
+    25%  {opacity: 0.25; display: block;}
+    50%  {opacity: 0.50; display: block;}
+    100% {opacity: 1; display: block;}
+}

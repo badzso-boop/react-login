@@ -15,19 +15,23 @@
     <div class="col-lg-6">
         <h1 class="text-center py-3 text-info ">Belépés</h1>
         <div class="list-group w-75 mx-auto" id="list">
-            <input class="list-group-item hater border-light border-bottom-0 border-top-0 text-dark" type = "email" id = "logemail" placeholder = "Email" required>
-            <input class="list-group-item hater border-light border-top-0 text-dark" type = "password" id = "logpassword" placeholder = "Jelszó" required>
-            <button class="list-group-item w-100 btn btn-info text-dark my-3 hater border border-dark" type = "submit" onclick="login();">Belépés</button>
+            <input class="list-group-item hater text-dark" type = "email" id = "logemail" placeholder = "Email" required>
+            <input class="list-group-item hater text-dark" type = "password" id = "logpassword" placeholder = "Jelszó" required>
+            <!-- Innentől a Krózseré -->
+            <div id="log-ertesit"></div>
+            <button class="list-group-item w-100 btn btn-info text-dark my-3 hater" type = "submit" onclick="login()">Belépés</button>
         </div>
     </div>
     <div class="col-lg-6">
         <h1 class="text-center py-3 text-info">Regisztráció</h1>
         <div class="list-group w-75 mx-auto" id="list">
-            <input class="list-group-item hater border-light border-bottom-0 text-dark" type = "name" id = "signev" placeholder = "Név" required>
-            <input class="list-group-item hater border-light border-bottom-0 border-top-0 text-dark" type = "email" id = "sigemail" placeholder = "Email" required>
-            <input class="list-group-item hater border-light border-bottom-0 border-top-0 text-dark" type = "password" id = "sigpassword" placeholder = "Jelszó" required>
-            <input class="list-group-item hater border-light border-top-0 text-dark" type = "password" id = "sigpassword2" placeholder = "Jelszó újra" required>
-            <button class="list-group-item w-100 btn btn-info text-dark my-3 hater border border-dark" type = "submit" onclick="signup()">Regisztrálj!</button>
+            <input class="list-group-item hater text-dark" type = "name" id = "signev" placeholder = "Név" required>
+            <input class="list-group-item hater text-dark" type = "email" id = "sigemail" placeholder = "Email" required>
+            <input class="list-group-item hater text-dark" type = "password" id = "sigpassword" placeholder = "Jelszó" required>
+            <input class="list-group-item hater text-dark" type = "password" id = "sigpassword2" placeholder = "Jelszó újra" required>
+            <!-- Innentől a Krózseré -->
+            <div id="sig-ertesit" class="m-0 p-0 text-center text-warning"></div>
+            <button class="list-group-item w-100 btn btn-info text-dark my-3 hater" type = "submit" onclick="signup()">Regisztrálj!</button>
         </div>
     </div>
 </div>
@@ -37,12 +41,12 @@
         const email = document.getElementById('logemail').value;
         const password = document.getElementById('logpassword').value;
         
-        const span = document.createElement('span');
-
         const loginData = {
             email: email,
             password: password
         }
+
+        document.getElementById('log-ertesit').innerHTML = '';
 
         fetch('http://localhost:3030/login', {method: 'POST', body: JSON.stringify(loginData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
             if (res.redirected) {
@@ -51,10 +55,23 @@
             return res.json();
         }).then(data => {
             console.log(data);
-            if(data.siker === 0)
-            {
-                span.innerText = "Sikertelen belépés!";
-                document.body.appendChild(span);
+            switch(data.siker) {
+                case 0:
+                    const div = document.createElement('div');
+                    div.innerText = "Kérem töltse ki a üres mezőket!";
+                    div.setAttribute('class', 'my-1 p-0 text-center alert alert-danger');
+                    div.setAttribute('id', 'log-div');
+                    document.getElementById('log-ertesit').appendChild(div);
+                    break;
+                case 1:
+                    const div1 = document.createElement('div');
+                    div1.innerText = "Hibás email cím vagy jelszó!!";
+                    div1.setAttribute('class', 'my-1 p-0 text-center alert alert-danger');
+                    div1.setAttribute('id', 'log-div');
+                    document.getElementById('log-ertesit').appendChild(div1);
+                    break;
+                default:
+                    break;
             }
         });
     }
@@ -65,8 +82,6 @@
         const password = document.getElementById('sigpassword').value;
         const password2 = document.getElementById('sigpassword2').value;
         
-        const span = document.createElement('span');
-
         const signupData = {
             nev: nev,
             email: email,
@@ -74,16 +89,38 @@
             password2: password2
         }
         
+        document.getElementById('sig-ertesit').innerHTML = '';
+
         fetch('http://localhost:3030/signup', {method: 'POST', body: JSON.stringify(signupData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
             if (res.redirected) {
                 window.location.href = res.url;
             }
             return res.json();
         }).then(data => {
-            if(data.siker === 0)
-            {
-                span.innerText = "Sikertelen regisztráció!";
-                document.body.appendChild(span);
+            switch(data.siker) {
+                case 0:
+                    const div = document.createElement('div');
+                    div.innerText = "Kérem töltse ki a üres mezőket!";
+                    div.setAttribute('class', 'my-1 p-0 text-center alert alert-danger');
+                    div.setAttribute('id', 'sig-div');
+                    document.getElementById('sig-ertesit').appendChild(div);
+                    break;
+                case 1:
+                    const div1 = document.createElement('div');
+                    div1.innerText = "Ezzel az email címmel már regiszráltak fiókot!";
+                    div1.setAttribute('class', 'my-1 p-0 text-center alert alert-danger');
+                    div1.setAttribute('id', 'sig-div');
+                    document.getElementById('sig-ertesit').appendChild(div1);
+                    break;
+                case 2:
+                    const div2 = document.createElement('div');
+                    div2.innerText = "A két jelszó nem egyezik meg!";
+                    div2.setAttribute('class', 'my-1 p-0 text-center alert alert-danger');
+                    div2.setAttribute('id', 'sig-div');
+                    document.getElementById('sig-ertesit').appendChild(div2);
+                    break;
+                default:
+                    break;
             }
             console.log(data);
         });

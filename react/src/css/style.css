@@ -1,4 +1,4 @@
-.list-group-item, .btn
+input, button, textarea
 {
     outline: none !important;
     transition: 0.3s ease-in-out !important;
@@ -7,6 +7,12 @@
 {
     color: white !important;
     font-weight: bold;
+}
+.form-control, .form-control:active, .form-control:focus
+{
+    box-shadow: none !important;
+    outline: none !important;
+    border: 1px solid transparent;
 }
 .hater
 {
@@ -33,9 +39,11 @@
         padding: 0px !important;
     }
 }
-@media (min-width: 992px) {
-    #todoBtn
-    {
-        width: 25%;
-    }
+.feher
+{
+    background-color: rgba(255,255,255,.3);
+}
+#saveBtn
+{
+    transform: translateY(-50%);
 }

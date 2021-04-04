@@ -60,14 +60,14 @@ function ListTodo(props) {
     }
 
     return (
-        <div>
-            <h1>Teendők</h1>
+        <div className="col-xl-12">
+            <h1 className="text-center py-3 text-info">Teendők</h1>
             {edit && <ListTodoItemEdit
                         id = {data[editId].id} 
                         teendo={data[editId].teendo}
                         onSave = {todosSaveHandler} 
                         onDelete={todosDeleteHandler}/>}
-            <ul>
+            <ul className="m-0 p-0">
                 <Card>
                     {data.map(todo => <ListTodoItem 
                                             key={todo.id} 

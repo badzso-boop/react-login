@@ -10,9 +10,6 @@ function Navbar() {
                 <div className="collapse navbar-collapse">
                     <ul className="nav navbar-nav">
                         <li className="nav-item">
-                            <Link className="nav-link py-2 px-3" to = '/'>Belépés/Regisztráció</Link>
-                        </li>
-                        <li className="nav-item">
                             <Link className="nav-link py-2 px-3" to='/main'>Főoldal</Link>
                         </li>
                         <li className="nav-item">

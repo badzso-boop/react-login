@@ -14,10 +14,6 @@ class App extends React.Component {
   constructor(props){
     super(props);
 
-    this.state = {
-      DUMMY_DATA: [],
-    }
-
     this.SignUpPostHandler = this.SignUpPostHandler.bind(this);
     this.LoginPostHandler = this.LoginPostHandler.bind(this);
     this.TodoPostHandler = this.TodoPostHandler.bind(this);
@@ -25,7 +21,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:3030/getTodo', {method: 'GET', headers: {'Content-type':'application/json'}}).then(res => {
+    fetch('/todoAPI/getTodo', {method: 'GET', headers: {'Content-type':'application/json'}}).then(res => {
       return res.json();
     }).then(data => {
       var result = Array.from(data);
@@ -33,14 +29,15 @@ class App extends React.Component {
       {
         NAGY_CSUNYA_ADAT.push(result[i])
       }
-      this.setState({DUMMY_DATA: result});
+      
+      this.forceUpdate();
     }).catch(err => {
       console.log('Hibaa bazdmeg: ' + err);
-    });   
+    });
   }
 
   SignUpPostHandler(signupData) {
-    fetch('http://localhost:3030/signup', {method: 'POST', body: JSON.stringify(signupData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
+    fetch('/todoAPI/signup', {method: 'POST', body: JSON.stringify(signupData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
       return res.json();
     }).then(data => {
         console.log(data);
@@ -48,7 +45,7 @@ class App extends React.Component {
   }
 
   LoginPostHandler(loginData) {
-    fetch('http://localhost:3030/login', {method: 'POST', body: JSON.stringify(loginData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
+    fetch('/todoAPI/login', {method: 'POST', body: JSON.stringify(loginData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
       return res.json();
     }).then(data => {
       console.log(data);
@@ -57,7 +54,7 @@ class App extends React.Component {
 
   TodoPostHandler(teendoData) {
     console.log(teendoData);
-    fetch('http://localhost:3030/teendovalt', {method: 'POST', body: JSON.stringify(teendoData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
+    fetch('/todoAPI/changeTodo', {method: 'POST', body: JSON.stringify(teendoData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
       return res.json();
     }).then(data => {
       if(data.success == 0)
@@ -77,15 +74,10 @@ class App extends React.Component {
     //fetch('http://localhost:9000/testAPI', {method: 'GET', body: JSON.stringify(teendoData, null, 2), headers: {'Content-type':'application/json'}}).then(res => console.log(res));
   }
   render() {
-    //console.log(this.state.DUMMY_DATA);
     return (
       <div className="container-fluid row p-1 m-0">
         <Switch>
-            <Route path='/' exact={true}>
-              <Login className="col-lg-6"  OnLogin={this.LoginPostHandler}/>
-              <SignUp className="col-lg-6"  OnSignUp={this.SignUpPostHandler}/>
-            </Route>
-            <Route path='/todo'>
+            <Route path='/'>
               <AddTodo onAddTeendo={this.TodoPostHandler}/>
               <ListTodo todos={NAGY_CSUNYA_ADAT} onSavePush={this.TodoPostHandler}/>
             </Route>

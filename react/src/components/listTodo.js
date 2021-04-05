@@ -31,7 +31,7 @@ class ListTodo extends React.Component {
             id: props.id
         };
         console.log(kuldData.id);
-        fetch('http://localhost:3030/deletepost', {method: 'POST', body: JSON.stringify(kuldData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
+        fetch('/deleteTodo', {method: 'POST', body: JSON.stringify(kuldData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
             return res.json();
         }).then(data => {
             if(data.success == 0)

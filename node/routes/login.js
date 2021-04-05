@@ -19,7 +19,7 @@ router.post('/login', (req, res) => {
     return res.json({"siker":0});
   }
 
-  db.query('SELECT password, id FROM teszt WHERE email = ?', login.email).then(resp => {
+  db.query('SELECT password, id FROM felhasznalo WHERE email = ?', login.email).then(resp => {
     if(resp[0] === undefined) {
       return res.json({"siker":1});
     }
@@ -66,7 +66,7 @@ router.post('/signup', (req, res) => {
   ];
 
   console.log(login);
-  db.query('INSERT INTO teszt(nev, email, password) values (?,?,SHA2(?,384)) RETURNING id', p).then(result => {
+  db.query('INSERT INTO felhasznalo(nev, email, password) values (?,?,SHA2(?,384)) RETURNING id', p).then(result => {
     req.session.user_id = result[0].id;
     return res.json(200, {"siker":3});
   }).catch(err => {

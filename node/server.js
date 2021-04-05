@@ -3,11 +3,14 @@ const MariaDBStore = require('express-session-mariadb-store');
 const session = require('express-session');
 const crypto = require('crypto');
 const cors = require('cors');
-const loginRoutes = require('./routes/login');
+
+const path = require('path');
 
 const app = express();
 
 const db = require('./database');
+const loginRoutes = require('./routes/login');
+const todoAPI = require('./routes/todoAPI');
 
 app.use(cors());
 app.use(express.urlencoded({extended:false}));
@@ -28,37 +31,36 @@ app.use(session({
   }
 }));
 app.use(express.static(__dirname + '/public'));
-app.use(loginRoutes);
+
+app.use('/log', loginRoutes);
+app.use('/todoAPI', todoAPI);
 
 app.get('/dest', (req, res) => {
   req.session.destroy();
   return res.send('<h1>Session törölve</h1>');
 });
 
-app.get('/getTodo', (req, res) => {
-  const oda = [
-    {
-      id: 0,
-      teendo: 'Vidd le a szemetet',
-      author: 'Krózser',
-      date: '2021.04.04'
-    },
-    {
-      id: 1,
-      teendo: 'Programozzad le a backendet!',
-      author: 'Ádó',
-      date: '2021.04.04'
-    }
-  ];
-  return res.send(oda);
+app.get('/teszt', (req, res) => {
+  return res.send('<h1>' + req.session.user_id + '</h1>');
 });
 
-app.get('/', (req, res, next) => {
+
+app.get('*', (req, res, next) => {
+  console.log('Bejön?');
+  console.log(req.session.user_id);
   if(req.session.user_id === undefined) {
-    return res.redirect('/login');
+    console.log('Bejelentkezzé!');
+    console.log('Vége');
+    return res.redirect('/log/login');
   }
+  next();
+});
+
+app.use(express.static(path.join(__dirname, '../react/build')));
+
+app.use((req, res) => {
   
-  return res.redirect('http://localhost:3000/todo');
+  res.sendFile(path.join(__dirname, '../react/build/index.html'));
 });
 
 app.listen(3030);

@@ -13,50 +13,55 @@ function AddTodo(props) {
         const enteredTeendo = teendoRef.current.value;
         const enteredAuthor = authorRef.current.value;
 
-        let d = new Date();
-        let year =d.getFullYear();
-        let month = d.getMonth();
-        let day = d.getDate();
-        let hour = d.getHours();
-        let minute = d.getMinutes();
-        let second = d.getSeconds();
-        
-        if(month < 10)
-        {
-            month = '0'+(month+1);
-        }
+        // Szóval először INSERTeljük az SQL -be az új teendőt,
+        // aztán RETURNINGolunk SQL-ből a beillesztett todo ID -jára
+        // Ami még fontos, hogy a date-et az SQL-ből kapja :)
 
-        if(day < 10)
-        {
-            day = '0'+day;
-        }
-
-        if(hour < 10)
-        {
-            hour = '0'+hour;
-        }
-        
-        if(minute < 10)
-        {
-            minute = '0'+minute;
-        }
-        
-        if(second < 10)
-        {
-            second = '0'+second;
-        }
-
-        const currentDate = d.getFullYear() + "." + month + "." + day + " - " + hour + ":" + minute + ":" + second;
-
-        const teendoData = {
-            id: i,
-            teendo: enteredTeendo,
-            author: enteredAuthor,
-            date: currentDate,
+        const kuld = {
+            teendo: enteredTeendo
         };
-        i++;
 
-        props.onAddTeendo(teendoData);
+        fetch('/todoAPI/addTodo', {method: 'POST', body: JSON.stringify(kuld, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
+            return res.json();
+        }).then(data => {
+            // TODO: belerakni switch-case-be
+            if(data.success == 0)
+            {
+                console.log('Töltsd ki az üres mezőket!');
+            }
+
+            else if(data.success == 2) {
+                console.log('Adatbázis hiba!');
+            }
+
+            else if (data.success == 1) {
+                console.log('A mentés sikerült!');
+
+                let daa = new Date(data.date);
+                let year =daa.getFullYear();
+                let month = +daa.getMonth() + 1;
+                let day = daa.getDate();
+                let hour = daa.getHours();
+                let minute = daa.getMinutes();
+                let second = daa.getSeconds();
+                month = (month < 10) ? '0' + month : month;
+                day = (day < 10) ? '0' + day : day;
+                hour = (hour < 10) ? '0' + hour : hour;
+                minute = (minute < 10) ? '0' + minute : minute;
+                second = (second < 10) ? '0' + second : second;
+                const currentDate = daa.getFullYear() + "." + month + "." + day + " - " + hour + ":" + minute + ":" + second;
+
+                const teendoData = {
+                    id: data.id,
+                    teendo: enteredTeendo,
+                    author: data.author,
+                    date: currentDate,
+                };
+
+                console.log(typeof(teendoData.date));
+                props.onAddTeendo(teendoData);
+            }
+        });
     }
 
     return (

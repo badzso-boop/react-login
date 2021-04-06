@@ -5,13 +5,11 @@ let i = 0;
 
 function AddTodo(props) {    
     const teendoRef = useRef();
-    const authorRef = useRef();
 
     function addTodoHandler(event) {
         event.preventDefault();
 
         const enteredTeendo = teendoRef.current.value;
-        const enteredAuthor = authorRef.current.value;
 
         // Szóval először INSERTeljük az SQL -be az új teendőt,
         // aztán RETURNINGolunk SQL-ből a beillesztett todo ID -jára
@@ -71,10 +69,6 @@ function AddTodo(props) {
                     <div className="form-floating">
                         <input className="list-group-item form-control hater text-dark rounded-top" type = "text" name = "teendo" id = "teendo" placeholder="teendo" ref = {teendoRef}/>
                         <label className="w-25" htmlFor="teendo">Teendő</label>
-                    </div>
-                    <div className="form-floating">
-                        <input className="list-group-item form-control hater text-dark rounded-top" type = "text" name = "author" id = "author" placeholder="személy" ref = {authorRef}/>
-                        <label className="w-25"htmlFor="author">Személy</label>
                     </div>
                     <button className="list-group-item w-100 btn btn-info text-dark my-3 hater" type = "submit">Mentés/Hozzáadás</button>
                 </form>

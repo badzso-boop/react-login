@@ -10,20 +10,6 @@ router.get('/faszom', (req, res) => {
 });
 
 router.get('/getTodo', (req, res) => {
-  const oda = [
-    {
-      id: 1,
-      teendo: 'Vidd le a szemetet',
-      author: 'Krózser',
-      date: '2021.04.04'
-    },
-    {
-      id: 0,
-      teendo: 'Programozzad le a backendet!',
-      author: 'Ádó',
-      date: '2021.04.04'
-    }
-  ];
   const teszt = [];
   db.query('SELECT felhasznalo.nev AS felhasznalo_nev, todok.todo AS todo_todo, todok.id AS todo_id, todok.date AS todo_date FROM todok LEFT JOIN felhasznalo ON (felhasznalo.id = todok.user_id)').then(resu => {
     const ans = resu;
@@ -59,23 +45,8 @@ router.post('/addTodo', (req, res) => {
   ];
 
   // TODO: itt tartok
-  db.query('INSERT INTO todok (user_id, todo) values (?,?) RETURNING id, date', p).then(result => {
-    let t_id = result[0].id;
-    let t_date = result[0].date;
-
-    db.query('SELECT nev FROM felhasznalo WHERE id = ?', req.session.user_id).then(resu => {
-      const responseData = {
-        success: 1,
-        id: t_id,
-        author: resu[0].nev,
-        date: t_date
-      };
-      return res.json(responseData);
-
-    }).catch(error => {
-      console.log(error);
-      return res.json({"success":2});
-    });    
+  db.query('INSERT INTO todok (user_id, todo) values (?,?)', p).then(result => {
+      return res.json({"success":1});
   }).catch(err => {
     console.log(err);
     return res.json({"success":2});
@@ -83,11 +54,56 @@ router.post('/addTodo', (req, res) => {
 });
 
 router.post('/deleteTodo', (req, res) => {
-  return res.json({"siker":0});
+  let todo = req.body;
+  if(todo.id == undefined || todo.id === '') {
+    return res.json({"success":0});
+  }
+
+  db.query('SELECT user_id FROM todok WHERE id = ?', todo.id).then(result => {
+    const uid = result[0].user_id;
+    if(uid !== req.session.user_id) {
+      return res.json({"success":2});
+    }
+    db.query('DELETE FROM todok WHERE id = ?', todo.id).then(r => {
+      return res.json({"success":1});
+    }).catch(err => {
+      console.log(err);
+      return res.json({"success":3});
+    });
+  }).catch(err => {
+    console.log(err);
+    return res.json({"success":3});
+  });
 });
 
-router.post('/changeTodo', (req, res) => {
-  return res.json({"siker":0});
+router.post('/saveTodo', (req, res) => {
+  const todo = req.body;
+  if(todo.id == undefined || todo.id === '' ||
+     todo.todo == undefined || todo.todo === '') {
+      return res.json({"success":0});
+  }
+
+  db.query('SELECT user_id FROM todok WHERE id = ?', todo.id).then(result => {
+    const uid = result[0].user_id;
+    if(uid !== req.session.user_id) {
+      return res.json({"success":2});
+    }
+
+    const p = [
+      todo.todo,
+      todo.id
+    ];
+
+    db.query('UPDATE todok SET todo = ?, date = now() WHERE id = ?', p).then(result => {
+      return res.json({"success":1});
+    }).catch(err => {
+      console.log(err);
+      return res.json({"success":3});
+    });
+  }).catch(err => {
+    console.log(err);
+    return res.json({"success":3});
+  });
 });
 
 module.exports = router;

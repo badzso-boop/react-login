@@ -1,22 +1,34 @@
-import {useRef} from 'react';
+import React, {useRef} from 'react';
 import DatePicker from 'react-date-picker';
+import App from './../App';
 
 let i = 0;
 
-function AddTodo(props) {    
-    const teendoRef = useRef();
+class AddTodo extends React.Component {    
+    constructor(props) {
+        super(props);
+        this.state = {
+            bevitel: '',
+        }
 
-    function addTodoHandler(event) {
+        this.addTodoHandler = this.addTodoHandler.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState({bevitel: event.target.value});
+        this.forceUpdate();
+    }
+    
+    addTodoHandler(event) {
         event.preventDefault();
-
-        const enteredTeendo = teendoRef.current.value;
 
         // Szóval először INSERTeljük az SQL -be az új teendőt,
         // aztán RETURNINGolunk SQL-ből a beillesztett todo ID -jára
         // Ami még fontos, hogy a date-et az SQL-ből kapja :)
 
         const kuld = {
-            teendo: enteredTeendo
+            teendo: this.state.bevitel
         };
 
         fetch('/todoAPI/addTodo', {method: 'POST', body: JSON.stringify(kuld, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
@@ -34,7 +46,10 @@ function AddTodo(props) {
 
             else if (data.success == 1) {
                 console.log('A mentés sikerült!');
-
+                
+            }
+            App.loadTodos();
+/*
                 let daa = new Date(data.date);
                 let year =daa.getFullYear();
                 let month = +daa.getMonth() + 1;
@@ -57,23 +72,28 @@ function AddTodo(props) {
                 };
 
                 console.log(typeof(teendoData.date));
+
                 props.onAddTeendo(teendoData);
-            }
+*/
         });
+
+
     }
 
-    return (
-        <div className="col-xl-12">
-                <h1 className="text-center py-3 text-info">Teendő Hozzáadása</h1>
-                <form className="list-group w-75 mx-auto" id="list" onSubmit={addTodoHandler}>
-                    <div className="form-floating">
-                        <input className="list-group-item form-control hater text-dark rounded-top" type = "text" name = "teendo" id = "teendo" placeholder="teendo" ref = {teendoRef}/>
-                        <label className="w-25" htmlFor="teendo">Teendő</label>
-                    </div>
-                    <button className="list-group-item w-100 btn btn-info text-dark my-3 hater" type = "submit">Mentés/Hozzáadás</button>
-                </form>
-        </div>
-    );
+    render() {
+        return (
+            <div className="col-xl-12">
+                    <h1 className="text-center py-3 text-info">Teendő Hozzáadása</h1>
+                    <form className="list-group w-75 mx-auto" id="list" onSubmit={this.addTodoHandler}>
+                        <div className="form-floating">
+                            <input className="list-group-item form-control hater text-dark rounded-top" type = "text" name = "teendo" id = "teendo" placeholder="teendo" onChange={this.changeHandler}/>
+                            <label className="w-25" htmlFor="teendo">Teendő</label>
+                        </div>
+                        <button className="list-group-item w-100 btn btn-info text-dark my-3 hater" type = "submit">Mentés/Hozzáadás</button>
+                    </form>
+            </div>
+        );
+    }
 }
 
 export default AddTodo;

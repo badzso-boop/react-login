@@ -31,14 +31,26 @@ class ListTodo extends React.Component {
             id: props.id
         };
         console.log(kuldData.id);
-        fetch('/deleteTodo', {method: 'POST', body: JSON.stringify(kuldData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
+        fetch('/todoAPI/deleteTodo', {method: 'POST', body: JSON.stringify(kuldData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
             return res.json();
         }).then(data => {
-            if(data.success == 0)
+            switch(data.success)
             {
-                console.log('nem sikerult a mentes');
-            } else {
-                console.log('sikerult a mentes');
+                case 0:
+                    console.log('Hiányzó adatok!');
+                    break;
+                case 1:
+                    console.log('A mentés sikerült!');
+                    break;
+                case 2:
+                    console.log('Nincs hozzáférésed ehhez a művelethez!');
+                    break;
+                case 3:
+                    console.log('Adatbázis hiba!');
+                    break;
+                default:
+                    break;
+                
             }
         });
     }
@@ -46,15 +58,35 @@ class ListTodo extends React.Component {
     todosSaveHandler(props) {
         let alap = props.szoveg;
         let valtid = props.id.id;
-        let d = new Date();
-        let valtdate = d.getFullYear() + "." + d.getMonth() + "." + d.getDate() + " - " + d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 
         const kuldData = {
             id: valtid,
             todo: alap,
-            date: valtdate
         }
-        console.log(kuldData);
+        //console.log(kuldData);
+
+        fetch('/todoAPI/saveTodo', {method: 'POST', body: JSON.stringify(kuldData, null, 2), headers: {'Content-type':'application/json'}}).then(res => {
+            return res.json();
+        }).then(data => {
+            switch(data.success)
+            {
+                case 0:
+                    console.log('Hiányzó adatok!');
+                    break;
+                case 1:
+                    console.log('A mentés sikerült!');
+                    break;
+                case 2:
+                    console.log('Nincs hozzáférésed ehhez a művelethez!');
+                    break;
+                case 3:
+                    console.log('Adatbázis hiba!');
+                    break;
+                default:
+                    break;
+                
+            }
+        });
     }
 
     render() {

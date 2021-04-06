@@ -21,6 +21,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    this.loadTodos();
+  }
+
+  loadTodos() {
     fetch('/todoAPI/getTodo', {method: 'GET', headers: {'Content-type':'application/json'}}).then(res => {
       return res.json();
     }).then(data => {
@@ -78,7 +82,7 @@ class App extends React.Component {
       <div className="container-fluid row p-1 m-0">
         <Switch>
             <Route path='/'>
-              <AddTodo onAddTeendo={this.TodoPostHandler}/>
+              <AddTodo onAddTeendo={this.TodoPostHandler} LoadTodo={this.loadTodos}/>
               <ListTodo todos={NAGY_CSUNYA_ADAT} onSavePush={this.TodoPostHandler}/>
             </Route>
         </Switch>
@@ -86,5 +90,6 @@ class App extends React.Component {
     );
   }
 }
+
 
 export default App;

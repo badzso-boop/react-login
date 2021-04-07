@@ -4,12 +4,12 @@
   "homepage": "/",
   "private": true,
   "watch": {
-      "build": {
-        "patterns": [
-          "src"
-        ],
-        "extensions": "js,jsx"
-      }
+    "build": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "js,jsx"
+    }
   },
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.10",

@@ -14,19 +14,7 @@ class ListTodo extends React.Component {
         this.todosSaveHandler = this.todosSaveHandler.bind(this);
     };
 
-    todosDeleteHandler(props) {
-        for(let j = 0; j < this.data.length; j++)
-        {
-            if(this.data[j].id === props.id)
-            {
-                this.data.splice(j,1);
-
-                this.forceUpdate();
-
-                break;
-            }
-        }
-        
+    todosDeleteHandler(props) {        
         const kuldData = {
             id: props.id
         };
@@ -41,6 +29,7 @@ class ListTodo extends React.Component {
                     break;
                 case 1:
                     console.log('A mentés sikerült!');
+                    this.props.onDeletFetch();
                     break;
                 case 2:
                     console.log('Nincs hozzáférésed ehhez a művelethez!');
@@ -50,7 +39,6 @@ class ListTodo extends React.Component {
                     break;
                 default:
                     break;
-                
             }
         });
     }
@@ -75,6 +63,7 @@ class ListTodo extends React.Component {
                     break;
                 case 1:
                     console.log('A mentés sikerült!');
+                    this.props.onEditFetch();
                     break;
                 case 2:
                     console.log('Nincs hozzáférésed ehhez a művelethez!');

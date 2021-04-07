@@ -18,6 +18,7 @@ class App extends React.Component {
     this.LoginPostHandler = this.LoginPostHandler.bind(this);
     this.TodoPostHandler = this.TodoPostHandler.bind(this);
     this.ListTodoGetHandler = this.ListTodoGetHandler.bind(this);
+    this.loadTodos = this.loadTodos.bind(this);
   }
 
   componentDidMount() {
@@ -25,6 +26,7 @@ class App extends React.Component {
   }
 
   loadTodos() {
+    NAGY_CSUNYA_ADAT = [];
     fetch('/todoAPI/getTodo', {method: 'GET', headers: {'Content-type':'application/json'}}).then(res => {
       return res.json();
     }).then(data => {
@@ -33,7 +35,6 @@ class App extends React.Component {
       {
         NAGY_CSUNYA_ADAT.push(result[i])
       }
-      
       this.forceUpdate();
     }).catch(err => {
       console.log('Hibaa bazdmeg: ' + err);
@@ -82,8 +83,8 @@ class App extends React.Component {
       <div className="container-fluid row p-1 m-0">
         <Switch>
             <Route path='/'>
-              <AddTodo onAddTeendo={this.TodoPostHandler} LoadTodo={this.loadTodos}/>
-              <ListTodo todos={NAGY_CSUNYA_ADAT} onSavePush={this.TodoPostHandler}/>
+              <AddTodo onAddTeendo={this.TodoPostHandler} LoadTodo={this.loadTodos} onSaveFetch={this.loadTodos}/>
+              <ListTodo todos={NAGY_CSUNYA_ADAT} onSavePush={this.TodoPostHandler} onDeletFetch={this.loadTodos} onEditFetch={this.loadTodos}/>
             </Route>
         </Switch>
       </div>

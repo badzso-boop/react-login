@@ -33,6 +33,20 @@ class App extends React.Component {
       var result = Array.from(data);
       for(let i = 0; i < result.length; i++)
       {
+        let daa = new Date(result[i].date);
+        let year = daa.getFullYear();
+        let month = +daa.getMonth() + 1;
+        let day = daa.getDate();
+        let hour = daa.getHours();
+        let minute = daa.getMinutes();
+        let second = daa.getSeconds();
+        month = (month < 10) ? '0' + month : month;
+        day = (day < 10) ? '0' + day : day;
+        hour = (hour < 10) ? '0' + hour : hour;
+        minute = (minute < 10) ? '0' + minute : minute;
+        second = (second < 10) ? '0' + second : second;
+        const currentDate = daa.getFullYear() + "." + month + "." + day + " - " + hour + ":" + minute + ":" + second;
+        result[i].date = currentDate;
         NAGY_CSUNYA_ADAT.push(result[i])
       }
       this.forceUpdate();

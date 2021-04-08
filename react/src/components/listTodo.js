@@ -63,7 +63,6 @@ class ListTodo extends React.Component {
                     break;
                 case 1:
                     console.log('A mentés sikerült!');
-                    this.props.onEditFetch();
                     break;
                 case 2:
                     console.log('Nincs hozzáférésed ehhez a művelethez!');
@@ -73,8 +72,8 @@ class ListTodo extends React.Component {
                     break;
                 default:
                     break;
-                
             }
+            this.props.onEditFetch();
         });
     }
 

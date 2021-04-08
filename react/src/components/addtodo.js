@@ -11,10 +11,16 @@ class AddTodo extends React.Component {
 
         this.addTodoHandler = this.addTodoHandler.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.restartInput = this.restartInput.bind(this);
     }
 
     handleChange(event) {
         this.setState({bevitel: event.target.value});
+        this.forceUpdate();
+    }
+
+    restartInput() {
+        this.setState({bevitel: ''});
         this.forceUpdate();
     }
     
@@ -44,7 +50,8 @@ class AddTodo extends React.Component {
 
             else if (data.success == 1) {
                 console.log('A mentés sikerült!');
-                this.props.onSaveFetch();                
+                this.props.onSaveFetch();
+                this.restartInput();
             }
 /*
                 let daa = new Date(data.date);
@@ -83,7 +90,7 @@ class AddTodo extends React.Component {
                     <h1 className="text-center py-3 text-info">Teendő Hozzáadása</h1>
                     <form className="list-group w-75 mx-auto" id="list" onSubmit={this.addTodoHandler}>
                         <div className="form-floating">
-                            <input className="list-group-item form-control hater text-dark rounded-top" type = "text" name = "teendo" id = "teendo" placeholder="teendo" onChange={this.handleChange}/>
+                            <input className="list-group-item form-control hater text-dark rounded-top" type = "text" name = "teendo" id = "teendo" placeholder="teendo" value={this.state.bevitel} onChange={this.handleChange}/>
                             <label className="w-25" htmlFor="teendo">Teendő</label>
                         </div>
                         <button className="list-group-item w-100 btn btn-info text-dark my-3 hater" type = "submit">Mentés/Hozzáadás</button>
